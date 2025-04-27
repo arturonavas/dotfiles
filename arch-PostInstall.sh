@@ -103,6 +103,19 @@ install_aur_packages() {
         visual-studio-code-bin firefox-developer-edition
 }
 
+configure_virtualization() {
+    # Verificar y agregar usuario al grupo libvirt
+    if ! groups "$USER" | grep -q '\blibvirt\b'; then
+        echo "Añadiendo usuario $USER al grupo libvirt..."
+        sudo usermod -aG libvirt "$USER"
+    fi
+
+    # Verificar estado del servicio libvirt
+    if ! systemctl is-enabled libvirtd.service &> /dev/null; then
+        echo "Habilitando e iniciando servicio libvirtd..."
+        sudo systemctl enable --now libvirtd.service
+    fi
+}
 # Configurar Zsh como shell
 configure_zsh() {
     if ! grep -q "$(which zsh)" /etc/shells; then
@@ -122,11 +135,10 @@ main() {
     install_gaming_emulation
     install_virtualization
     install_aur_packages
+    configure_virtualization
     configure_zsh
 
-    echo "¡Configuración completada!"
-    echo "Notas: Reinicia el sistema y añade tu usuario al grupo libvirt:"
-    echo "  sudo usermod -aG libvirt $USER"
+    echo "¡Configuración completada >.<!"
 }
 
-main
+main 
