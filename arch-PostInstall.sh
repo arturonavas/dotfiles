@@ -67,7 +67,7 @@ install_base_hyprland_pkgs() {
         ttf-jetbrains-mono-nerd ttf-font-awesome papirus-icon-theme \
         pipewire pipewire-pulse wireplumber pamixer \
         bluez bluez-utils blueman \
-        firefox
+        
 }
 
 # Instalar controladores AMD
