@@ -1,0 +1,109 @@
+// ~/.config/waybar/config
+// Archivo de configuración de Waybar para Arturo
+{
+    // Capa y posición de la barra
+    "layer": "top", // Puedes usar "bottom" si prefieres
+    "position": "top", // "top" o "bottom"
+    "height": 45, // Altura de la barra en píxeles
+
+    // Orden de los módulos
+    "modules-left": [
+        "custom/menu",
+        "cpu",
+        "memory",
+        "hyprland/workspaces"
+    ],
+    "modules-center": [], // Dejamos el centro vacío para separar
+    "modules-right": [
+        "mpris",
+        "pulseaudio",
+        "clock",
+        "tray", // Bandeja del sistema (opcional, pero útil)
+        "custom/power"
+    ],
+
+    // --- Configuración de Módulos Izquierda ---
+    "custom/menu": {
+        "format": "󰣇", // Icono de menú (Nerd Font: nf-cod-menu)
+        "tooltip": false,
+        "on-click": "wofi --show drun ", // Comando para abrir tu menú de aplicaciones
+        "interval": "once" // No necesita actualizarse
+    },
+    "cpu": {
+        "format": " {usage}%", // Icono CPU (Nerd Font: nf-fa-microchip)
+        "tooltip": true,
+        "interval": 2 // Intervalo de actualización en segundos
+    },
+    "memory": {
+        "format": "󰍛 {used:0.1f}G", // Icono RAM (Nerd Font: nf-md-memory)
+        "tooltip": true,
+        "interval": 2
+    },
+    "hyprland/workspaces": {
+        "format": "{icon}", // Usaremos iconos definidos abajo
+        "format-icons": {
+            "default": "", // nf-md-circle_medium
+            "active": "", // nf-md-circle_medium (se coloreará diferente en CSS)
+            "urgent": ""  // nf-md-circle_medium (se coloreará diferente en CSS)
+        },
+        "persistent-workspaces": {
+            "*": 5 // Muestra al menos 5 workspaces, incluso si están vacíos
+            // Puedes ajustarlo o quitarlo si prefieres que solo se muestren los activos/con ventanas
+        },
+        "on-click": "activate" // Permite hacer clic para cambiar de workspace
+    },
+
+    // --- Configuración de Módulos Derecha ---
+    "mpris": {
+        "format": "{player_icon} {dynamic}", // {dynamic} muestra título/artista si está disponible
+        "format-paused": "{player_icon} Pausado",
+        "player-icons": {
+            "default": "󰓇", // nf-md-music_note
+            "spotify": "" // nf-fa-spotify
+            // Puedes añadir más para otros reproductores si usas
+        },
+        "status-icons": {
+            "playing": "󰐊", // nf-md-play
+            "paused": "󰏤" // nf-md-pause
+        },
+        "max-length": 30, // Longitud máxima del texto
+        "interval": 2,
+        "on-click": "playerctl play-pause", // Clic para pausar/reanudar
+        "on-scroll-up": "playerctl next", // Scroll arriba para siguiente canción
+        "on-scroll-down": "playerctl previous" // Scroll abajo para canción anterior
+    },
+    "pulseaudio": {
+        "format": "{icon} {volume}%",
+        "format-muted": "󰖁 Muted", // nf-md-volume_mute
+        "format-icons": {
+            "headphone": "", // nf-fa-headphones
+            "hands-free": "󰋎", // nf-md-headset
+            "headset": "󰋎", // nf-md-headset
+            "phone": "", // nf-fa-phone
+            "portable": "", // nf-fa-phone
+            "car": "", // nf-fa-car
+            "default": ["", "", ""] // nf-fa-volume_off, nf-fa-volume_down, nf-fa-volume_up
+        },
+        "scroll-step": 5, // Cuánto cambia el volumen con el scroll
+        "on-click": "pavucontrol", // Abre el control de volumen al hacer clic
+        "on-click-right": "playerctl mute" // Clic derecho para mutear (o usa 'pactl set-sink-mute @DEFAULT_SINK@ toggle')
+    },
+    "clock": {
+        "format": " {:%H:%M}", // Icono Reloj (nf-fa-clock_o) y hora
+        "format-alt": " {:%a %d/%m/%Y}", // Icono Calendario (nf-fa-calendar) y fecha completa al pasar el ratón
+        "tooltip-format": "<big>{:%A, %d de %B de %Y}</big>\n<tt>{calendar}</tt>", // Tooltip con fecha y calendario
+        "interval": 15, // Actualiza cada 15 segundos
+        "on-click": "yad --calendar --title 'Calendario' --text='' --no-buttons --close-on-unfocus --undecorated --fixed --borders=10" // Abre el calendario YAD
+    },
+    "tray": {
+        "icon-size": 18, // Tamaño de los iconos de la bandeja
+        "spacing": 5 // Espacio entre iconos
+    },
+    "custom/power": {
+        "format": "", // Icono Power (Nerd Font: nf-fa-power_off)
+        "tooltip": false,
+        "on-click": "wlogout", // Comando para abrir tu menú de apagado
+        "interval": "once"
+    }
+}
+

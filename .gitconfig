@@ -1,0 +1,17 @@
+[user]
+	name = arturonavas
+	email = aarturonavass@gmail.com
+[init]
+	defaultBranch = main
+[color]
+	ui = true
+[core]
+	editor = code
+	excludesfile = /home/caelesti/.gitignore_global
+	autocrlf = input
+[alias]
+	s = status
+	co = checkout
+	cm = commit -m
+	st = status
+	lg = log --oneline --graph --decorate --all
